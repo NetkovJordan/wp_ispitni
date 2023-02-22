@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>WP Exam</title>
+</head>
+<body>
+
+<div>
+    <!-- The form below should invoke the method MenuController.showMenus -->
+    <form id="filter-form">
+
+        <label for="nameSearch">Restaurant Name</label>
+        <input id="nameSearch" type="text" name="nameSearch"/>
+        <select id="menuType" name="menuType">
+            <option value="">All</option>
+            <!-- For each menu type you should have one <option> like below  -->
+            <option th:each="type : ${types}"  th:value="${type}" th:text="${type.toString()}"> [menuType]</option>
+        </select>
+        <button id="filter" type="submit">Filter</button>
+    </form>
+    <div>
+        <!-- MenuController.showAdd -->
+        <a href="/menu/add" class="add-item">
+            Add new menu
+        </a>
+    </div>
+    <table>
+        <tr>
+            <th>Restaurant name</th>
+            <th>Menu Type</th>
+            <th>Menu Items</th>
+            <th>Creator</th>
+            <th>Actions</th>
+        </tr>
+        <!-- For each menu you should have one <tr> like below -->
+        <tr th:each="menu : ${menus}" class="item">
+            <td th:text="${menu.restaurantName}">[menu.restaurantName]</td>
+            <td th:text="${menu.menuType}">[menu.menuType]</td>
+            <td>
+                <ul>
+                    <!-- For each menu's item you should display one <li> element like the one below -->
+                    <li th:each="item : ${menu.getMenuItems()}" th:text="${item.name}">[item.name]</li>
+                </ul>
+            </td>
+            <td>[menu.creator]</td>
+            <td>
+                <!-- MenuController.delete -->
+                <form th:method="POST" th:action="@{'/menu/{id}/delete' (id=${menu.id})}" >
+                    <button type="submit" class="delete-item">Delete</button>
+                </form>
+                <!-- MenuController.showEdit -->
+                <a  th:href="@{'/menu/{id}/edit' (id=${menu.id})}" class="edit-item">Edit</a>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div>
+    <ul id="nav">
+        <li><a href="/">Home</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</div>
+</body>
+</html>
