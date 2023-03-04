@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.awt.*;
 import java.util.List;
 import java.util.Optional;
+#Added super secret comment
 
 @Repository
 public interface NewsRepository extends JpaRepository<News,Long> {
